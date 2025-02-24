@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>whatsApp</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.min.js"
+    integrity="sha512-Xm9qbB6Pu06k3PUwPj785dyTl6oHxgsv9nHp7ej7nCpAqGZT3OZpsELuCYX05DdonFpTlBpXMOxjavIAIUwr0w=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script defer src="app.js"></script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <main class="bg-gray-950">   
+
+    <ul id="messages"  >
+
+    </ul>
+    <input type="text" id="messageInput" maxlength="100" placeholder="type message ...." size="5" 
+    
+    
+    required
+    
+    
+    class="shadow appearance-none border rounded w-96 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+    
+    
+    
+    
+    
+    
+    >
+    <button id="send" class="bg-red-100" > Send
+
+        <!-- <i class="fa-solid fa-square-arrow-up-right" ></i> -->
+
+
+    </button>
+      <!-- Load Socket.io client from the server -->
+      <script src="/socket.io/socket.io.js"></script>
+
+      <script>
+        const socket = io();
+
+        async  function initChat() {
+            const res = await fetch('/current-user');
+            const data = await res.json()
+            console.log(data)
+            if(!data.username) {
+                alert('You need to log in first');
+               
+                window.location.href = '/login-form'; // Redirect after successful login
+                  
+            }
+        
+            const socket = io();
+            console.log(`Connected as ${data.username}`);
+        
+            document.querySelector('#send').addEventListener('click', () => {
+                const messageText = document.getElementById('messageInput').value;
+                socket.emit('chatMessage', { username: data.username , message: messageText});
+            });
+        
+            socket.on('chatMessage', ({ username, message }) => {
+                document.querySelector('#messages').innerHTML += `<li>${username}: ${message}</li>`;
+            });
+        
+        }
+        initChat()
+        socket.on('chatHistory', (history) => {
+            const messagesList = document.querySelector('#messages');
+            messagesList.innerHTML = ''
+            history.forEach(({ username, message }) => {
+                const newMessage = document.createElement('li');
+                newMessage.classList.add(
+    'shadow', 'appearance-none', 'border', 'rounded', 'w-96', 
+    'bg-red-100',
+    'py-2', 'px-3', 'text-gray-700', 'leading-tight', 
+    'focus:outline-none', 'focus:shadow-outline'
+);
+                newMessage.textContent = `${username}: 
+                ${message}`;
+                messagesList.appendChild(newMessage);
+            });
+        });
+
+
+    </script>
+
+    
+
+</main>
+</body>
+</html>
