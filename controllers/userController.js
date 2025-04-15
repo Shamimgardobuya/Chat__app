@@ -39,6 +39,7 @@ const  createUser = async (req, res ) => {
 const userLogin = async (req, res) => {
     try {
         request = req.body
+        console.log(request)
         const email = req.body.email
         const password = req.body.password
         const check_user = await knex('users')
