@@ -52,4 +52,4 @@ jobs:
     
 
     - name: Run migrations
-      run: npx knex migrate up
+      run: npx knex migrate:up
