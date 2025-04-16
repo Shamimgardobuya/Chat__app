@@ -44,7 +44,12 @@ jobs:
     - name: Linking project to Vercel
       env:
         VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        DATABASE_URL: ${{ secrets.DATABASE_URL }}
       run: npx vercel link --yes --project node-js-chat-app --token=${{ secrets.VERCEL_TOKEN }}
 
     - name: Deploy to vercel
       run: npx vercel --yes --prod --token=${{ secrets.VERCEL_TOKEN }}
+    
+
+    - name: Run migrations
+      run: npx knex migrate up

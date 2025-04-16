@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express')
 const http = require('http')
 const socket = require('socket.io')
@@ -23,7 +24,7 @@ app.use(express.json());
 
 const sessionMiddleware = session(
     {
-        secret: 'NstYCdpdE4URb8OUAAAB',
+        secret: process.env.SESSION_KEY,
         resave: false,
         saveUninitialized: true,
         cookie: { secure: false } 
