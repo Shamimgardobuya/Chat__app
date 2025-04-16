@@ -52,4 +52,4 @@ jobs:
     
 
     - name: Run migrations
-      run: npx knex migrate:latest --env production
+      run: ${{ secrets.DATABASE_URL }} npx knex migrate:latest --env production
