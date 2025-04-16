@@ -41,9 +41,6 @@ jobs:
     - name: Install dependencies
       run: npm install
 
-    - name: Run migrations
-      run: npx knex migrate:latest --env production
-
     - name: Linking project to Vercel
       env:
         VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
@@ -53,5 +50,8 @@ jobs:
     - name: Deploy to vercel
       run: npx vercel --yes --prod --token=${{ secrets.VERCEL_TOKEN }}
     
-
-    
+    - name: Pull Environment Variables from Vercel
+      run: vercel env pull .env --token=${{ secrets.VERCEL_TOKEN }}
+      
+    - name: Run migrations
+      run: npx knex migrate:latest --env production
