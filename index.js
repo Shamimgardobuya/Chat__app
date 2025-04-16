@@ -6,7 +6,7 @@ const socket = require('socket.io')
 const app = express()
 const server = http.createServer(app)
 const io = socket(server)
-const knex = require('knex')(require('./knexfile').development)
+const knex = require('knex')(require('./knexfile').process.env.NODE_ENV ?? development)
 const path = require('path')
 const csurf = require('csurf')
 const cookieParser = require('cookie-parser')
@@ -37,6 +37,7 @@ io.use((socket, next) => {
     sessionMiddleware(socket.request, {}, next);
 });
 const userRouter = require('./routes/userRoute')
+const development  = require('./knexfile').process.env.NODE_ENV ?? development
 app.use('/users', userRouter);
 app.get('/current-user', (req, res) => {
     if (req.session.user) {
