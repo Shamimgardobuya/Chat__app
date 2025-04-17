@@ -45,6 +45,7 @@ jobs:
       env:
         VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        NODE_ENV: ${{ secrets.NODE_ENV }}
       run: npx vercel link --yes --project node-js-chat-app --token=${{ secrets.VERCEL_TOKEN }}
 
     - name: Deploy to vercel
