@@ -1,4 +1,4 @@
-const node_env = process.env.NODE_ENV || development
+const node_env = process.env.DEV_ENV || development
 const knex = require('knex')(require('../knexfile').node_env)
 const json = require('jsonwebtoken')
 const bcrypt = require('bcrypt')

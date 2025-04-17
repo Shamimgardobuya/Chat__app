@@ -2,7 +2,7 @@ require('dotenv').config()
 const express = require('express')
 const http = require('http')
 const socket = require('socket.io')
-const node_env = process.env.NODE_ENV || development
+const node_env = process.env.DEV_ENV || development
 const app = express()
 const server = http.createServer(app)
 const io = socket(server)
