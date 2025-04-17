@@ -2,11 +2,11 @@ require('dotenv').config()
 const express = require('express')
 const http = require('http')
 const socket = require('socket.io')
-const node_env = process.env.NODE_ENV
+const node_env = process.env.NODE_ENV || development
 const app = express()
 const server = http.createServer(app)
 const io = socket(server)
-const knex = require('knex')(require('./knexfile').node_env ?? development)
+const knex = require('knex')(require('./knexfile').node_env)
 const path = require('path')
 const csurf = require('csurf')
 const cookieParser = require('cookie-parser')
