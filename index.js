@@ -1,6 +1,7 @@
 const express = require('express')
 const http = require('http')
 const socket = require('socket.io')
+console.log(process.env.DEV_ENV )
 const node_env = process.env.DEV_ENV ?? development
 const app = express()
 const server = http.createServer(app)
